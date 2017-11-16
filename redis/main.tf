@@ -1,6 +1,6 @@
 resource "aws_elasticache_replication_group" "redis" {
-  replication_group_id          = "${var.project}-${var.environment}-${var.name}"
-  replication_group_description = "Redis cluster for ${var.project}-${var.environment}-${var.name}"
+  replication_group_id          = "${var.environment}-${var.project}-${var.name}"
+  replication_group_description = "Redis cluster for ${var.environment}-${var.project}-${var.name}"
   engine                        = "redis"
   engine_version                = "${var.engine_version}"
   port                          = "${var.port}"
@@ -17,6 +17,14 @@ resource "aws_elasticache_replication_group" "redis" {
     Environment = "${var.environment}"
     Project     = "${var.name}"
   }
+
+  tags = "${merge("${var.tags}",
+    map("Name", "${var.environment}.${var.project}.${var.name}",
+      "service", "${var.name}",
+      "environment", "${var.environment}",
+      "stack", "${var.project}"))
+  }"
+
 }
 
 resource "aws_elasticache_subnet_group" "elasticache" {
