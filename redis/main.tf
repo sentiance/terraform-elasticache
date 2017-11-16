@@ -12,12 +12,6 @@ resource "aws_elasticache_replication_group" "redis" {
   availability_zones            = "${var.availability_zones}"
   automatic_failover_enabled    = "${var.automatic_failover_enabled}"
 
-  tags {
-    Name        = "${var.project}-${var.environment}-${var.name}"
-    Environment = "${var.environment}"
-    Project     = "${var.name}"
-  }
-
   tags = "${merge("${var.tags}",
     map("Name", "${var.environment}.${var.project}.${var.name}",
       "service", "${var.name}",
