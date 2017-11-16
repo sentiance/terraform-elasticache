@@ -55,3 +55,9 @@ variable "availability_zones" {
   description = "the list of AZs where you want your cluster to be deployed in"
   type        = "list"
 }
+
+variable "tags" {
+  description = "Optional tags"
+   type        = "map"
+   default     = {}
+ }
